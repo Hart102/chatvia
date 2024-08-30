@@ -1,6 +1,7 @@
 import { FaEllipsisV } from "react-icons/fa";
 import { Avatar, Accordion, AccordionItem } from "@nextui-org/react";
 import { BiUser } from "react-icons/bi";
+import { AccordionItemClass } from "@/utils/customStyles";
 
 const Profile = () => {
   return (
@@ -38,18 +39,11 @@ const Profile = () => {
 
         <Accordion className="px-0">
           <AccordionItem
-            startContent={<BiUser color="black" />}
             key="about"
-            aria-label="about"
             title="About"
-            classNames={{
-              base: "outline-none text-gray-500",
-              trigger: "border p-3",
-              title: "text-gray-700 font-medium",
-              titleWrapper: "w-full text-start",
-              indicator: "place-self-end",
-              content: "px-4 border border-t-0 bg-white",
-            }}
+            aria-label="about"
+            startContent={<BiUser color="black" />}
+            classNames={AccordionItemClass}
           >
             <div
               className="flex flex-col gap-4 py-3 [&_p]:font-medium
