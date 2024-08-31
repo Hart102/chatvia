@@ -18,24 +18,21 @@ const linkClasses =
 const SideBar = () => {
   return (
     <div
-      className="fixed bottom-0 md:relative w-full md:w-[80px] md:min-h-screen bg-white 
+      className="fixed bottom-0 md:relative w-full md:w-[5%] h-full bg-white 
     md:border-r py-2 px-3 md:p-5 flex flex-col items-center gap-4"
     >
       <Link to={routes.chat.root} className={`hidden md:flex ${linkClasses}`}>
         <Image src={logo} width={70} alt="" />
       </Link>
-
       <div className="flex md:flex-col gap-8">
         {navigations.map((item) => (
           <Link key={item.href} to={item.href} className={linkClasses}>
-            <item.icon className="text-2xl text-gray-600 hover:text-gray-900" />
+            <item.icon className="text-2xl text-gray-500" />
           </Link>
         ))}
-
         <BiMoon className="text-2xl text-gray-600 mx-auto cursor-pointer" />
-
         {/* ==================== */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center justify-center gap-4">
           <Dropdown
             shadow="lg"
             radius="sm"
@@ -44,6 +41,7 @@ const SideBar = () => {
           >
             <DropdownTrigger>
               <Avatar
+                size="sm"
                 as="button"
                 className="transition-transform"
                 src="https://i.pravatar.cc/150?u=a042581f4e29026024d"
@@ -56,7 +54,6 @@ const SideBar = () => {
               <DropdownItem key="settings" endContent={<BiCog size={16} />}>
                 Settings
               </DropdownItem>
-
               <DropdownItem
                 key="logout"
                 endContent={<BiPowerOff size={16} className="rotate-90" />}

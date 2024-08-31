@@ -19,11 +19,11 @@ const Chats = () => {
   };
 
   return (
-    <div className="w-full flex flex-col gap-6 py-8 bg-deep-gray-100 text-sm">
+    <div className="w-full h-full py-8 flex flex-col gap-6 bg-deep-gray-100 bg-opacity-85">
       <p className="text-lg md:text-xl font-medium px-4 md:px-5">Chats</p>
 
-      <div className="w-full flex flex-col gap-5 overflow-x-hidden px-4 md:px-5">
-        <form className="flex items-center gap-2 px-4 rounded bg-deep-gray-200">
+      <div className="w-full flex flex-col gap-5 px-4 md:px-5">
+        <form className="flex items-center gap-2 px-4 rounded bg-deep-gray-200 bg-opacity-75">
           <BiSearch size={22} className="text-gray-500" />
           <input
             type="search"
@@ -31,6 +31,7 @@ const Chats = () => {
             className="w-full outline-none bg-transparent py-3"
           />
         </form>
+        {/*========= Active Friends =========*/}
         <Slider {...settings}>
           {friends.map((friend) => (
             <div
@@ -40,8 +41,8 @@ const Chats = () => {
               <div className="z-10 -my-4 flex justify-center">
                 <Avater src="https://i.pravatar.cc/150?u=a04258114e29026708c" />
               </div>
-              <div className="min-h-[50px] w-[80px]1 w-full pt-5 bg-deep-gray-200 rounded">
-                <p className="capitalize text-center font-medium line-clamp-1">
+              <div className="min-h-[50px] w-full pt-5 bg-deep-gray-200 rounded bg-opacity-75">
+                <p className="capitalize text-center text-xs font-medium line-clamp-1">
                   {friend}
                 </p>
               </div>
@@ -49,11 +50,11 @@ const Chats = () => {
           ))}
         </Slider>
       </div>
-      {/* Chat List */}
+      {/*============ Chat List ============*/}
       <div>
-        <p className="mb-5 font-medium md:text-lg px-4 md:px-5">Recent</p>
+        <p className="mb-5 font-medium md:text-medium px-4 md:px-5">Recent</p>
         <div className="h-[55vh] md:h-[300px] flex flex-col gap-1 px-2 custom-scrollbar">
-          <div className="hover:bg-deep-gray-200 px-4 md:px-1.5">
+          <div className="hover:bg-deep-gray-200 bg-opacity-75 px-4 md:px-1.5">
             <ChatListItem
               src="https://i.pravatar.cc/150?u=a04258114e29026708c"
               name="patrick Hendricks"
@@ -62,7 +63,6 @@ const Chats = () => {
               unreadMessages={0}
             />
           </div>
-
           <div className="hover:bg-deep-gray-200 px-4 md:px-1.5">
             <ChatListItem
               src="https://i.pravatar.cc/150?u=a04258114e29026708c"
