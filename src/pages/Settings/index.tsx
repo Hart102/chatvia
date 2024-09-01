@@ -20,7 +20,7 @@ const Settings = () => {
   const [selectedValue, setSelectedValue] = useState<string>("available");
 
   return (
-    <div className="w-full h-full py-8 flex flex-col gap-6 bg-deep-gray-100 [&_button]:border-0">
+    <div className="w-screen md:w-full h-screen md:h-fit py-8 flex flex-col gap-6 bg-deep-gray-100 [&_button]:border-0">
       <p className="text-lg md:text-xl font-medium px-4 md:px-6">My Profile</p>
 
       <div className="flex flex-col gap-3 items-center py-2 px-4 md:px-5 border-b pb-8 [&_p]:text-gray-500">

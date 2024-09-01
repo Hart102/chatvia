@@ -33,7 +33,7 @@ const ProfilePreview = ({
   };
 
   return (
-    <div className={`w-full min-h-screen py-8 ${backgroundColor}`}>
+    <div className={`w-screen md:w-fit min-h-screen py-8 ${backgroundColor}`}>
       <Card
         shadow="none"
         radius="none"

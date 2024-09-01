@@ -10,6 +10,7 @@ export default {
       colors: {
         "deep-gray-100": "#F5F7FB",
         "deep-gray-200": "#E6EBF5",
+        "deep-blue-100": "#7269EF",
       },
     },
   },

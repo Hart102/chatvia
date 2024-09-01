@@ -5,6 +5,7 @@ export const routes = {
   },
   chat: {
     root: "/chat",
+    room: "/chat/room",
     profile: "/chat/profile",
     chats: "/chat/chats",
     groups: "/chat/groups",

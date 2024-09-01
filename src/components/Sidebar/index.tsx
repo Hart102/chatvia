@@ -18,7 +18,7 @@ const linkClasses =
 const SideBar = () => {
   return (
     <div
-      className="fixed bottom-0 md:relative w-full md:w-[5%] h-full bg-white 
+      className="fixed bottom-0 md:relative w-full md:w-[5%] 
     md:border-r py-2 px-3 md:p-5 flex flex-col items-center gap-4"
     >
       <Link to={routes.chat.root} className={`hidden md:flex ${linkClasses}`}>
@@ -30,7 +30,7 @@ const SideBar = () => {
             <item.icon className="text-2xl text-gray-500" />
           </Link>
         ))}
-        <BiMoon className="text-2xl text-gray-600 mx-auto cursor-pointer" />
+        <BiMoon className="hidden md:block text-2xl text-gray-600 mx-auto cursor-pointer" />
         {/* ==================== */}
         <div className="flex items-center justify-center gap-4">
           <Dropdown

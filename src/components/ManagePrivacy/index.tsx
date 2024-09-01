@@ -54,7 +54,8 @@ const ManagePrivacy = () => {
         size="sm"
         classNames={{
           base: "inline-flex flex-row-reverse w-full max-w-md items-center justify-between cursor-pointer border-b pb-5",
-          wrapper: "group-data-[selected=true]:bg-[#7269EF] bg-[#7269EF]",
+          wrapper:
+            "group-data-[selected=true]:bg-deep-blue-100 bg-deep-blue-100",
         }}
       >
         <p>Last seen</p>

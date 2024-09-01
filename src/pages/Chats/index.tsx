@@ -4,6 +4,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import ChatListItem from "@/components/ChatListItem";
+import { unreadMessages } from "@/DummyData";
 
 const friends = ["patrick", "emily", "doris", "steve", "teresa"];
 
@@ -54,33 +55,21 @@ const Chats = () => {
       <div>
         <p className="mb-5 font-medium md:text-medium px-4 md:px-5">Recent</p>
         <div className="h-[55vh] md:h-[300px] flex flex-col gap-1 px-2 custom-scrollbar">
-          <div className="hover:bg-deep-gray-200 bg-opacity-75 px-4 md:px-1.5">
-            <ChatListItem
-              src="https://i.pravatar.cc/150?u=a04258114e29026708c"
-              name="patrick Hendricks"
-              message="Hey! there I'm avaiable"
-              time="05 min"
-              unreadMessages={0}
-            />
-          </div>
-          <div className="hover:bg-deep-gray-200 px-4 md:px-1.5">
-            <ChatListItem
-              src="https://i.pravatar.cc/150?u=a04258114e29026708c"
-              name="patrick Hendricks"
-              message="Hey! there I'm avaiable"
-              time="05 min"
-              unreadMessages={2}
-            />
-          </div>
-          <div className="hover:bg-deep-gray-200 px-4 md:px-1.5">
-            <ChatListItem
-              src="https://i.pravatar.cc/150?u=a04258114e29026708c"
-              name="patrick Hendricks"
-              message="Hey! there I'm avaiable"
-              time="05 min"
-              unreadMessages={0}
-            />
-          </div>
+          {unreadMessages?.map((message) => (
+            <div
+              key={message?._id}
+              className="hover:bg-deep-gray-200 bg-opacity-75 px-4 md:px-1.5"
+            >
+              <ChatListItem
+                src={message?.src}
+                name="patrick Hendricks"
+                message={message?.messages}
+                time={message?.time}
+                unreadMessages={message.unreadCount}
+                _id={message?._id}
+              />
+            </div>
+          ))}
         </div>
       </div>
     </div>

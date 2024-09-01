@@ -6,3 +6,12 @@ export type UserType = {
   location?: string;
   img?: string;
 };
+
+export type messageObjectType = {
+  _id: string;
+  user: string;
+  img: string;
+  name: string;
+  message: string;
+  time: string;
+};

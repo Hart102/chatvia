@@ -14,7 +14,7 @@ const Chat = () => {
 
   return (
     <>
-      <div className="w-full1 h-screen flex flex-col-reverse md:flex-row lg:flex-row text-sm overflow-x-hidden">
+      <div className="w-full1 h-screen1 flex flex-col-reverse md:flex-row lg:flex-row text-sm overflow-x-hidden">
         <SideBar />
         <div className="w-full md:w-[95%] flex">
           <div className="w-full md:w-[30%]">
