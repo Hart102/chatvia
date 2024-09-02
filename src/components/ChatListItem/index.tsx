@@ -8,29 +8,29 @@ export const FriendsList = ({
   name,
   message,
   time,
-  unreadMessages,
+  unreadCount,
 }: {
   src: string;
   name: string;
   message: string;
   time: string;
-  unreadMessages: number;
+  unreadCount: number;
 }) => {
   return (
     <>
       <Card shadow="none" radius="none" className="p-0 bg-transparent">
         <CardBody className="px-0">
-          <div className="flex justify-between px-2 cursor-pointer">
-            <div className="flex items-center gap-2">
+          <div className="grid grid-cols-4 md:px-2 cursor-pointer">
+            <div className="flex items-center gap-2 col-span-3">
               <Avater src={src} />
               <div className=" flex flex-col gap-1">
                 <p className="first-letter:capitalize font-medium">{name}</p>
                 <span className="line-clamp-1 text-gray-500">{message}</span>
               </div>
             </div>
-            <div className="flex flex-col items-end gap-2.5 text-xs">
+            <div className="flex flex-col items-end gap-2.5 text-xs pl-2 col-span-1">
               <span className="text-gray-500">{time}</span>
-              {unreadMessages > 0 && (
+              {unreadCount > 0 && (
                 <div className="rounded-full text-center bg-red-100 text-red-400 py-0.5 px-2">
                   01
                 </div>
@@ -49,14 +49,14 @@ const ChatListItem = ({
   name,
   message,
   time,
-  unreadMessages,
+  unreadCount,
 }: {
   _id: string;
   src: string;
   name: string;
   message: string;
   time: string;
-  unreadMessages: number;
+  unreadCount: number;
 }) => {
   const navigate = useNavigate();
 
@@ -72,7 +72,7 @@ const ChatListItem = ({
           name={name}
           message={message}
           time={time}
-          unreadMessages={unreadMessages}
+          unreadCount={unreadCount}
         />
       </div>
       <div className="block md:hidden" onClick={() => openChatRoom(_id)}>
@@ -81,7 +81,7 @@ const ChatListItem = ({
           name={name}
           message={message}
           time={time}
-          unreadMessages={unreadMessages}
+          unreadCount={unreadCount}
         />
       </div>
     </>

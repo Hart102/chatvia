@@ -26,7 +26,7 @@ export const messages = [
   },
 ];
 
-export const unreadMessages = [
+export const unreadCount = [
   {
     _id: "123",
     name: "patrick Hendricks",

@@ -22,6 +22,7 @@ import CallModal from "../CallModal";
 import { FaAngleLeft } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 
+
 const Header = () => {
   const dispatch = useDispatch();
   const navigation = useNavigate();
@@ -43,7 +44,10 @@ const Header = () => {
   const handleViewProfile = () => dispatch(ViewProfile());
 
   return (
-    <nav className="w-full sticky top-0 flex items-center justify-between p-4 md:p-6 border-b bg-white [&_svg]:text-gray-500 [&_svg]:cursor-pointer">
+    <nav
+      className="w-full sticky top-0 flex items-center justify-between p-4 md:p-6 
+    border-b bg-white [&_svg]:text-gray-500 [&_svg]:cursor-pointer"
+    >
       <div className="flex items-center gap-3">
         <FaAngleLeft onClick={() => navigation(-1)} className="md:hidden" />
         <div className="flex items-center gap-2">
@@ -96,6 +100,7 @@ const Header = () => {
             <DropdownItem
               key="1"
               endContent={<BiIdCard />}
+              onClick={handleViewProfile}
               className="capitalize"
             >
               View Profile
@@ -104,6 +109,7 @@ const Header = () => {
               key="2"
               endContent={<BiPhone />}
               className="capitalize"
+              onClick={() => handleAudioCall("audio")}
             >
               Audio
             </DropdownItem>
@@ -111,6 +117,7 @@ const Header = () => {
               key="3"
               endContent={<BiVideo />}
               className="capitalize"
+              onClick={() => handleAudioCall("video")}
             >
               Video
             </DropdownItem>

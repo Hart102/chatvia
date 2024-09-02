@@ -13,7 +13,7 @@ import { FaAngleDown } from "react-icons/fa6";
 import ManageProfile from "@/components/ManageProfile";
 import ManagePrivacy from "@/components/ManagePrivacy";
 import { AccordionItemClass } from "@/utils/customStyles";
-
+import { BiSolidPencil } from "react-icons/bi";
 
 const Settings = () => {
   const [selectedAccordion, setSelectedAccordion] = useState<string>("1");
@@ -21,16 +21,26 @@ const Settings = () => {
 
   return (
     <div className="w-screen md:w-full h-screen md:h-fit py-8 flex flex-col gap-6 bg-deep-gray-100 [&_button]:border-0">
-      <p className="text-lg md:text-xl font-medium px-4 md:px-6">My Profile</p>
-
+      <p className="text-lg md:text-xl font-medium px-4 md:px-6">Settings</p>
       <div className="flex flex-col gap-3 items-center py-2 px-4 md:px-5 border-b pb-8 [&_p]:text-gray-500">
         <div className="flex flex-col items-center justify-center gap-3">
-          <Avatar
-            radius="full"
-            src="https://i.pravatar.cc/150?u=a04258114e29026708c"
-            className="w-20 h-20 text-large "
-            classNames={{ img: "rounded-full" }}
-          />
+          <div className="relative">
+            <Avatar
+              radius="full"
+              src="https://i.pravatar.cc/150?u=a04258114e29026708c"
+              className="w-[100px] h-[100px]"
+              classNames={{ img: "rounded-full" }}
+            />
+            <div className="absolute w-full h-full top-0 rounded-full flex items-end justify-end">
+              <label
+                htmlFor="profile-image"
+                className="w-[30px] h-[30px] bg-deep-gray-200 shadow flex items-center justify-center rounded-full cursor-pointer"
+              >
+                <BiSolidPencil size={18} />
+              </label>
+              <input type="file" id="profile-image" className="hidden" />
+            </div>
+          </div>
           <div className="flex flex-col gap-1 items-center">
             <b className="font-medium">Patricia Smith</b>
             <Dropdown className="text-gray-500 bg-white shadow-lg w-[150px]">

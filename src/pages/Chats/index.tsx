@@ -4,7 +4,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import ChatListItem from "@/components/ChatListItem";
-import { unreadMessages } from "@/DummyData";
+import { unreadCount } from "@/DummyData";
 
 const friends = ["patrick", "emily", "doris", "steve", "teresa"];
 
@@ -55,7 +55,7 @@ const Chats = () => {
       <div>
         <p className="mb-5 font-medium md:text-medium px-4 md:px-5">Recent</p>
         <div className="h-[55vh] md:h-[300px] flex flex-col gap-1 px-2 custom-scrollbar">
-          {unreadMessages?.map((message) => (
+          {unreadCount?.map((message) => (
             <div
               key={message?._id}
               className="hover:bg-deep-gray-200 bg-opacity-75 px-4 md:px-1.5"
@@ -65,7 +65,7 @@ const Chats = () => {
                 name="patrick Hendricks"
                 message={message?.messages}
                 time={message?.time}
-                unreadMessages={message.unreadCount}
+                unreadCount={message.unreadCount}
                 _id={message?._id}
               />
             </div>

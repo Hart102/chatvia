@@ -16,8 +16,8 @@ const ChatContainer = () => {
       ))}
 
       <form
-        className={`fixed bottom-0 md:right-2 py-4 flex items-center justify-center gap-4 border-t ${
-          isProfileVisible ? "w-full md:w-[35%]" : "w-full md:w-[65%] md:px-4"
+        className={`w-full fixed bottom-0 left-0 md:left-auto md:right-2 py-4 px-2 flex items-center justify-center gap-4 border-t ${
+          isProfileVisible ? "md:w-[35%]" : "md:w-[65%] md:px-4"
         }`}
       >
         <input
