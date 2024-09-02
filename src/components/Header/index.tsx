@@ -6,7 +6,7 @@ import {
   DropdownItem,
   Button,
 } from "@nextui-org/react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   BiIdCard,
   BiPhone,
@@ -16,16 +16,19 @@ import {
   BiVideo,
 } from "react-icons/bi";
 import { FaEllipsisH } from "react-icons/fa";
-import { openModal } from "@/redux/Actions/modalActions";
-import { ViewProfile } from "@/redux/Actions/profileActions";
+import { openModal } from "@/redux/Actions/ModalActions";
+import { ViewProfile } from "@/redux/Actions/ProfileActions";
 import CallModal from "../CallModal";
 import { FaAngleLeft } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
-
+import { RootState } from "@/redux/store";
 
 const Header = () => {
   const dispatch = useDispatch();
   const navigation = useNavigate();
+  const { selectedFriend } = useSelector(
+    (state: RootState) => state.selectedFriend
+  );
 
   const handleAudioCall = (callType: string) => {
     dispatch(
@@ -52,12 +55,12 @@ const Header = () => {
         <FaAngleLeft onClick={() => navigation(-1)} className="md:hidden" />
         <div className="flex items-center gap-2">
           <User
-            name="Jane Doe"
+            name={selectedFriend?.username}
             avatarProps={{
               size: "md",
-              src: "https://i.pravatar.cc/150?u=a04258114e29026702d",
+              src: selectedFriend?.profileImg,
             }}
-            classNames={{ name: "font-medium text-medium" }}
+            classNames={{ name: "capitalize font-medium text-medium" }}
           />
           <div className="w-[9px] h-[9px] rounded-full flex items-center justify-center mt-1 bg-green-500">
             <div className="w-[3px] h-[3px] rounded-full bg-white"></div>

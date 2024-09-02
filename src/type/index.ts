@@ -15,3 +15,13 @@ export type messageObjectType = {
   message: string;
   time: string;
 };
+
+export type FriendsType = {
+  _id: string;
+  username?: string;
+  profileImg?: string;
+  email: string;
+  message: string;
+  timeStamp: string;
+  unreadCount: number;
+};

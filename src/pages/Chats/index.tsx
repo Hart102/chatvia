@@ -4,9 +4,9 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import ChatListItem from "@/components/ChatListItem";
-import { unreadCount } from "@/DummyData";
+import { Friends } from "@/DummyData/database";
 
-const friends = ["patrick", "emily", "doris", "steve", "teresa"];
+const activeFriends = ["patrick", "emily", "doris", "steve", "teresa"];
 
 const Chats = () => {
   const settings = {
@@ -14,7 +14,7 @@ const Chats = () => {
     infinite: true,
     speed: 500,
     slidesToShow: 4,
-    slidesToScroll: friends.length,
+    slidesToScroll: activeFriends.length,
     autoplay: false,
     // autoplaySpeed: 3000,
   };
@@ -34,7 +34,7 @@ const Chats = () => {
         </form>
         {/*========= Active Friends =========*/}
         <Slider {...settings}>
-          {friends.map((friend) => (
+          {activeFriends.map((friend) => (
             <div
               key={friend}
               className="flex flex-col items-center mt-5 cursor-pointer"
@@ -55,18 +55,18 @@ const Chats = () => {
       <div>
         <p className="mb-5 font-medium md:text-medium px-4 md:px-5">Recent</p>
         <div className="h-[55vh] md:h-[300px] flex flex-col gap-1 px-2 custom-scrollbar">
-          {unreadCount?.map((message) => (
+          {Friends?.map((message) => (
             <div
               key={message?._id}
               className="hover:bg-deep-gray-200 bg-opacity-75 px-4 md:px-1.5"
             >
               <ChatListItem
-                src={message?.src}
-                name="patrick Hendricks"
-                message={message?.messages}
-                time={message?.time}
-                unreadCount={message.unreadCount}
                 _id={message?._id}
+                profileImg={message?.img}
+                message={message?.message}
+                timeStamp={message?.timeStamp}
+                unreadCount={message?.unreadCount}
+                username={message?.username}
               />
             </div>
           ))}

@@ -2,18 +2,21 @@ import { Card, CardBody } from "@nextui-org/react";
 import Avater from "../Avatar";
 import { useNavigate } from "react-router-dom";
 import { routes } from "@/routes";
+import { useDispatch } from "react-redux";
+import { selectFriend } from "@/redux/Actions/SelectFriendAction";
+import { FriendsType } from "@/type/index"; // To be replaced later
 
 export const FriendsList = ({
-  src,
-  name,
+  profileImg,
+  username,
   message,
-  time,
+  timeStamp,
   unreadCount,
 }: {
-  src: string;
-  name: string;
+  profileImg: string;
+  username: string;
   message: string;
-  time: string;
+  timeStamp: string;
   unreadCount: number;
 }) => {
   return (
@@ -22,14 +25,14 @@ export const FriendsList = ({
         <CardBody className="px-0">
           <div className="grid grid-cols-4 md:px-2 cursor-pointer">
             <div className="flex items-center gap-2 col-span-3">
-              <Avater src={src} />
+              <Avater src={profileImg} />
               <div className=" flex flex-col gap-1">
-                <p className="first-letter:capitalize font-medium">{name}</p>
+                <p className="capitalize font-medium">{username}</p>
                 <span className="line-clamp-1 text-gray-500">{message}</span>
               </div>
             </div>
             <div className="flex flex-col items-end gap-2.5 text-xs pl-2 col-span-1">
-              <span className="text-gray-500">{time}</span>
+              <span className="text-gray-500">{timeStamp}</span>
               {unreadCount > 0 && (
                 <div className="rounded-full text-center bg-red-100 text-red-400 py-0.5 px-2">
                   01
@@ -45,42 +48,59 @@ export const FriendsList = ({
 
 const ChatListItem = ({
   _id,
-  src,
-  name,
+  username,
   message,
-  time,
+  timeStamp,
+  profileImg,
   unreadCount,
 }: {
   _id: string;
-  src: string;
-  name: string;
+  username: string;
   message: string;
-  time: string;
+  timeStamp: string;
+  profileImg: string;
   unreadCount: number;
 }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const openChatRoom = (chatId: string) => {
-    navigate(routes.chat.room, { state: { chatId } });
+  const handleSelectFriend = () => {
+    const friend: FriendsType = {
+      _id,
+      username,
+      message,
+      timeStamp,
+      profileImg,
+      unreadCount,
+      email: "",
+    };
+    dispatch(selectFriend(friend));
+  };
+
+  const openChatRoom = () => {
+    navigate(routes.chat.room);
+    handleSelectFriend();
   };
 
   return (
     <>
-      <div className="hidden md:block">
+      {/*======= Desktop Screen =======*/}
+      <div onClick={handleSelectFriend} className="hidden md:block">
         <FriendsList
-          src={src}
-          name={name}
+          username={username}
           message={message}
-          time={time}
+          timeStamp={timeStamp}
+          profileImg={profileImg}
           unreadCount={unreadCount}
         />
       </div>
-      <div className="block md:hidden" onClick={() => openChatRoom(_id)}>
+      {/*======= Mobile Screen =======*/}
+      <div className="block md:hidden" onClick={() => openChatRoom()}>
         <FriendsList
-          src={src}
-          name={name}
+          username={username}
           message={message}
-          time={time}
+          timeStamp={timeStamp}
+          profileImg={profileImg}
           unreadCount={unreadCount}
         />
       </div>

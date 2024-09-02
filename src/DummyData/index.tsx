@@ -26,21 +26,3 @@ export const messages = [
   },
 ];
 
-export const unreadCount = [
-  {
-    _id: "123",
-    name: "patrick Hendricks",
-    time: "05 min",
-    unreadCount: 2,
-    src: "https://i.pravatar.cc/150?u=a04258114e29026708c",
-    messages: "Hey! there I'm avaiable",
-  },
-  {
-    _id: "123",
-    name: "patrick Hendricks",
-    time: "05 min",
-    unreadCount: 2,
-    src: "https://i.pravatar.cc/150?u=a04258114e29026708c",
-    messages: "Good morning, How are you? What about our next meeting?",
-  },
-];

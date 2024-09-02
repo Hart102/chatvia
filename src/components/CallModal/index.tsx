@@ -1,4 +1,4 @@
-import { closeModal } from "@/redux/Actions/modalActions";
+import { closeModal } from "@/redux/Actions/ModalActions";
 import { Image, Card, CardBody } from "@nextui-org/react";
 import { BiSolidVideo } from "react-icons/bi";
 import { FaTimes } from "react-icons/fa";

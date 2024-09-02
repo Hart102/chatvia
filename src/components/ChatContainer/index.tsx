@@ -9,6 +9,12 @@ const ChatContainer = () => {
     (state: RootState) => state.isProfileVisible
   );
 
+  // USE THE ID FROM THE SELECETED FRIEND OBJECT FO FETCH CHATS LATER
+
+  // const { selectedFriend } = useSelector(
+  //   (state: RootState) => state.selectedFriend
+  // );
+
   return (
     <div className="p-4 md:p-8">
       {messages?.map((message) => (

@@ -14,7 +14,7 @@ import { AccordionItemClass } from "@/utils/customStyles";
 import { UserType } from "@/type/index";
 import { userData } from "@/DummyData";
 import { useEffect, useState } from "react";
-import { HideProfile } from "@/redux/Actions/profileActions";
+import { HideProfile } from "@/redux/Actions/ProfileActions";
 
 const ProfilePreview = ({
   isPersonalProfile,
