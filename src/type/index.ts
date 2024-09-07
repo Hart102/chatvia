@@ -1,10 +1,24 @@
+// export type UserType = {
+//   firstname: string;
+//   lastname: string;
+//   bio: string;
+//   email: string;
+//   location?: string;
+//   img?: string;
+// };
+
 export type UserType = {
-  firstname: string;
-  lastname: string;
+  _id: string;
+  username: string;
+  phone: string;
+  password: string;
+  location: string;
   bio: string;
-  email: string;
-  location?: string;
-  img?: string;
+  friends: string[]; // Assuming friends is an array of user IDs (strings)
+  createdAt: string; // ISO date string
+  updatedAt: string; // ISO date string
+  __v: number;
+  profile_photo_id: string;
 };
 
 export type messageObjectType = {

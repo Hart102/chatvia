@@ -9,13 +9,8 @@ import "react-toastify/dist/ReactToastify.css";
 import logo from "@/assets/chatvia-logo.png";
 import { routes } from "@/routes";
 import { SignInSchema } from "@/Schema/authSchema";
-import instance from "@/api/axios";
-
-interface CookieOptions {
-  name: string;
-  value: string;
-  days?: number;
-}
+import instance from "@/api/axios/index";
+import { setCookie } from "@/api/cookie/index";
 
 const Signin = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -34,17 +29,6 @@ const Signin = () => {
     toast.error(response?.data?.message);
 
     if (!response?.data?.isError) {
-      // SET COOKIE
-      const setCookie = (options: CookieOptions) => {
-        let expires = "";
-        if (options.days) {
-          const date = new Date();
-          date.setTime(date.getTime() + options.days * 24 * 60 * 60 * 1000);
-          expires = "; expires=" + date.toUTCString();
-        }
-        document.cookie =
-          options.name + "=" + (options.value || "") + expires + "; path=/";
-      };
       setCookie({
         name: "chatvia",
         value: JSON.stringify(response?.data?.payoad),
@@ -76,20 +60,20 @@ const Signin = () => {
           [&_div]:flex [&_div]:items-center [&_div]:gap-2 [&_div]:rounded [&_div]:px-3 [&_div]:bg-deep-gray-100"
             >
               <article>
-                <label htmlFor="email">Username</label>
+                <label htmlFor="phone">Phone</label>
                 <div>
                   <BiUser size={20} />
                   <input
-                    type="text"
-                    placeholder="Enter email"
+                    type="tel"
+                    placeholder="Phone email"
                     className="w-full p-3 focus:outline-none text-sm"
-                    {...register("email")}
+                    {...register("phone")}
                   />
                 </div>
-                <p className="text-xs text-red-500">{errors?.email?.message}</p>
+                <p className="text-xs text-red-500">{errors?.phone?.message}</p>
               </article>
               <article>
-                <label htmlFor="email">Password</label>
+                <label htmlFor="password">Password</label>
                 <div>
                   <BiLock size={20} />
                   <input

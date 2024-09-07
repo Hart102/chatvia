@@ -22,7 +22,6 @@ import CallModal from "../CallModal";
 import { FaAngleLeft } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "@/redux/store";
-import { current_user } from "@/utils/currentUser";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -44,8 +43,6 @@ const Header = () => {
       )
     );
   };
-
-  console.log(current_user());
 
   const handleViewProfile = () => dispatch(ViewProfile());
 

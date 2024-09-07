@@ -32,7 +32,8 @@ const SideBar = () => {
             key={page.href}
             to={page.href}
             className={`${linkClasses} ${
-              location.pathname.slice(6) == page?.href?.slice(6) &&
+              // location.pathname.slice(6) == page?.href?.slice(6) &&
+              location.pathname.toLowerCase().includes(page?.href?.slice(6)) &&
               "bg-deep-gray-200"
             }`}
           >

@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form";
 import logo from "@/assets/chatvia-logo.png";
 import { routes } from "@/routes";
 import { SignUpSchema } from "@/Schema/authSchema";
-import instance from "@/api/axios";
+import instance from "@/api/axios/index";
 
 const Signup = () => {
   const navigation = useNavigate();
@@ -56,20 +56,20 @@ const Signup = () => {
           [&_div]:flex [&_div]:items-center [&_div]:gap-2 [&_div]:rounded [&_div]:px-3 [&_div]:bg-deep-gray-100"
             >
               <article>
-                <label htmlFor="email">Email</label>
+                <label htmlFor="phone">Phone</label>
                 <div>
                   <BiEnvelope size={20} />
                   <input
-                    type="email"
-                    placeholder="Enter email"
+                    type="phone"
+                    placeholder="Enter phone"
                     className="w-full p-3 focus:outline-none text-sm"
-                    {...register("email")}
+                    {...register("phone")}
                   />
                 </div>
-                <p className="text-xs text-red-500">{errors?.email?.message}</p>
+                <p className="text-xs text-red-500">{errors?.phone?.message}</p>
               </article>
               <article>
-                <label htmlFor="email">Username</label>
+                <label htmlFor="username">Username</label>
                 <div>
                   <BiUser size={20} />
                   <input
@@ -84,7 +84,7 @@ const Signup = () => {
                 </p>
               </article>
               <article>
-                <label htmlFor="email">Password</label>
+                <label htmlFor="username">Password</label>
                 <div>
                   <BiLock size={20} />
                   <input

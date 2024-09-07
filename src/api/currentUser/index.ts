@@ -1,4 +1,4 @@
-import { access_token } from "@/api/axios";
+import { access_token } from "../cookie/index";
 
 export const current_user = () => {
   if (access_token !== undefined) {

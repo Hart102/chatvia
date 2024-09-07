@@ -12,28 +12,28 @@ import { BiUser } from "react-icons/bi";
 import { useDispatch } from "react-redux";
 import { AccordionItemClass } from "@/utils/customStyles";
 import { UserType } from "@/type/index";
-import { userData } from "@/DummyData";
-import { useEffect, useState } from "react";
 import { HideProfile } from "@/redux/Actions/ProfileActions";
+import { imageUrl } from "@/utils/appwriteImageurl";
 
 const ProfilePreview = ({
+  user,
   isPersonalProfile,
   backgroundColor,
 }: {
+  user: UserType;
   isPersonalProfile: boolean;
   backgroundColor?: string;
 }) => {
   const dispatch = useDispatch();
-  const [user, setUser] = useState<UserType>();
-
-  useEffect(() => setUser(userData), []);
 
   const handleCloseProfile = () => {
     dispatch(HideProfile());
   };
 
   return (
-    <div className={`w-screen md:w-fit min-h-screen py-8 ${backgroundColor}`}>
+    <div
+      className={`w-screen md:w-[100%] min-h-screen py-8 ${backgroundColor}`}
+    >
       <Card
         shadow="none"
         radius="none"
@@ -56,13 +56,13 @@ const ProfilePreview = ({
             <div className="flex flex-col items-center justify-center gap-3">
               <Avatar
                 radius="full"
-                src={user?.img}
+                src={imageUrl(user?.profile_photo_id)}
                 className="w-20 h-20 text-large "
                 classNames={{ img: "rounded-full" }}
               />
               <div className="flex flex-col gap-1 items-center">
                 <b className="font-medium text-lg capitalize">
-                  {user?.firstname} {user?.lastname}
+                  {user?.username}
                 </b>
                 <div className="flex items-center gap-1">
                   <div className="w-[9px] h-[9px] rounded-full flex items-center justify-center bg-green-500">
@@ -75,8 +75,12 @@ const ProfilePreview = ({
           </div>
         </CardBody>
         <CardFooter>
-          <div className="flex flex-col gap-5 items-center px-4 md:px-5 [&_p]:text-gray-500">
-            <p className="leading-[23px] text-sm">{user?.bio}</p>
+          <div className="w-full flex flex-col gap-5 items-center px-4 md:px-5 [&_p]:text-gray-500">
+            <div className="w-full">
+              <p className="leading-[23px] text-sm text-start first-letter:uppercase">
+                {user?.bio}
+              </p>
+            </div>
             <Accordion className="px-0">
               <AccordionItem
                 key="about"
@@ -90,14 +94,12 @@ const ProfilePreview = ({
             [&_div]:flex [&_div]:flex-col [&_div]:gap-1 [&_b]:text-gray-700 [&_b]:font-medium [&_b]:text-sm"
                 >
                   <div>
-                    <span>Name</span>
-                    <b className="capitalize">
-                      {user?.firstname} {user?.lastname}
-                    </b>
+                    <span>Username</span>
+                    <b className="capitalize">{user?.username}</b>
                   </div>
                   <div>
-                    <span>Email</span>
-                    <b>{user?.email}</b>
+                    <span>Phone number</span>
+                    <b>{user?.phone}</b>
                   </div>
                   <div>
                     <span>Location</span>
