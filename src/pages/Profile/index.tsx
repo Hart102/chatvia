@@ -2,9 +2,10 @@ import instance from "@/api/axios";
 import { current_user } from "@/api/currentUser";
 import ProfilePreview from "@/components/ProfilePreview";
 import { useEffect, useState } from "react";
+import { UserType } from "@/type/index";
 
 const Profile = () => {
-  const [user, setUser] = useState();
+  const [user, setUser] = useState<UserType>();
 
   useEffect(() => {
     const FetchUser = async () => {
@@ -18,7 +19,7 @@ const Profile = () => {
 
     FetchUser();
   }, []);
-  console.log(user);
+
   return (
     <ProfilePreview
       user={user}

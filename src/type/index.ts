@@ -14,10 +14,10 @@ export type UserType = {
   password: string;
   location: string;
   bio: string;
-  friends: string[]; // Assuming friends is an array of user IDs (strings)
-  createdAt: string; // ISO date string
-  updatedAt: string; // ISO date string
-  __v: number;
+  friends: string[];
+  createdAt?: string;
+  updatedAt?: string;
+  __v?: number;
   profile_photo_id: string;
 };
 
