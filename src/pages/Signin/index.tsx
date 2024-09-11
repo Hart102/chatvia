@@ -26,15 +26,17 @@ const Signin = () => {
 
     const response = await instance.post("/login", data);
     setIsLoading(false);
-    toast.error(response?.data?.message);
-
+    
     if (!response?.data?.isError) {
+      toast.success(response?.data?.message);
       setCookie({
         name: "chatvia",
         value: JSON.stringify(response?.data?.payoad),
       });
       window.location.href = routes.chat.root;
+      return
     }
+    toast.error(response?.data?.message);
   };
 
   return (

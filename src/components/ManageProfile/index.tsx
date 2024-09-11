@@ -2,7 +2,7 @@ import { toast, ToastContainer } from "react-toastify";
 import { ProfileSchema } from "@/Schema/profileSchema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import { Button, Spinner } from "@nextui-org/react";
+import { Button } from "@nextui-org/react";
 import { BiEditAlt } from "react-icons/bi";
 import React, { useEffect, useState } from "react";
 import instance from "@/api/axios";
@@ -68,54 +68,42 @@ const ManageProfile: React.FC<setImageProp> = ({ setProfileImage }) => {
        [&_input]:font-medium [&_input]:text-sm [&_input]:capitalize [&_input]:outline-none [&_input]:py-1"
       >
         <div className="flex justify-end">
-          <Button
-            size="sm"
-            disabled={isLoading}
-            onClick={() => setIsDisabled(false)}
-            startContent={
-              !isLoading ? (
-                <BiEditAlt size={15} className="cursor-pointer" />
-              ) : (
-                <Spinner size="sm" />
-              )
-            }
-            className={btnCass}
-          >
-            {!isLoading ? "Edit" : "Saving..."}
-          </Button>
+          {isDisabled ? (
+            <Button
+              size="sm"
+              className={btnCass}
+              onClick={() => setIsDisabled(false)}
+              startContent={<BiEditAlt size={15} className="cursor-pointer" />}
+            >
+              Edit
+            </Button>
+          ) : (
+            <Button
+              size="sm"
+              className={btnCass}
+              disabled={isLoading}
+              onClick={handleSubmit(onSubmit)}
+            >
+              {isLoading ? "Saving..." : "Save"}
+            </Button>
+          )}
         </div>
-
         <div>
           <span>Username</span>
-          <input
-            disabled={isDisabled}
-            {...register("username")}
-            onBlur={handleSubmit(onSubmit)}
-          />
+          <input disabled={isDisabled} {...register("username")} />
         </div>
         <div>
           <span>Phone Number</span>
-          <input
-            type="tel"
-            disabled={isDisabled}
-            {...register("phone")}
-            onBlur={handleSubmit(onSubmit)}
-          />
+          <input type="tel" disabled={isDisabled} {...register("phone")} />
         </div>
         <div>
           <span>Location</span>
-          <input
-            disabled={isDisabled}
-            {...register("location")}
-            onBlur={handleSubmit(onSubmit)}
-          />
+          <input disabled={isDisabled} {...register("location")} />
         </div>
-
         <div>
           <span className="font-medium">Bio</span>
           <textarea
             {...register("bio")}
-            onBlur={handleSubmit(onSubmit)}
             className="p-2 border outline-none resize-none h-20"
           />
           <p className="text-xs text-red-500">{errors?.bio?.message}</p>

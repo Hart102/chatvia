@@ -90,7 +90,7 @@ const ProfilePreview = ({
                 classNames={AccordionItemClass}
               >
                 <div
-                  className="flex flex-col gap-4 py-3 [&_p]:font-medium
+                  className="flex flex-col gap-6 py-3 [&_p]:font-medium
             [&_div]:flex [&_div]:flex-col [&_div]:gap-1 [&_b]:text-gray-700 [&_b]:font-medium [&_b]:text-sm"
                 >
                   <div>

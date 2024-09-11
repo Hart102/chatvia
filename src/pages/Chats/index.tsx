@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { User, Card, CardBody } from "@nextui-org/react";
 import Avater from "@/components/Avatar";
 import { BiSearch } from "react-icons/bi";
 import Slider from "react-slick";
@@ -5,10 +7,39 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import ChatListItem from "@/components/ChatListItem";
 import { Friends } from "@/DummyData/database";
+import instance from "@/api/axios";
+import { UserType } from "@/type/index";
+import { imageUrl } from "@/utils/appwriteImageurl";
+import { useDispatch } from "react-redux";
+import { selectFriend } from "@/redux/Actions/SelectFriendAction";
 
 const activeFriends = ["patrick", "emily", "doris", "steve", "teresa"];
 
 const Chats = () => {
+  const dispatch = useDispatch();
+  const [searchResult, setSearchResut] = useState<UserType[]>([]);
+
+  const findUser = async (query: string) => {
+    if (query) {
+      const { data } = await instance.get(`/find-user/${query.toLowerCase()}`);
+
+      if (!data?.isError) {
+        setSearchResut(data?.payload);
+      }
+    }
+  };
+
+  const handleSelectFriend = (user: UserType) => {
+    console.log(user);
+    dispatch(
+      selectFriend({
+        _id: user._id,
+        username: user.username,
+        profile_photo_id: user?.profile_photo_id,
+      })
+    );
+  };
+
   const settings = {
     dots: false,
     infinite: true,
@@ -29,6 +60,7 @@ const Chats = () => {
           <input
             type="search"
             placeholder="Search messages or users"
+            onChange={(event) => findUser(event.target.value)}
             className="w-full outline-none bg-transparent py-3"
           />
         </form>
@@ -55,21 +87,41 @@ const Chats = () => {
       <div>
         <p className="mb-5 font-medium md:text-medium px-4 md:px-5">Recent</p>
         <div className="h-[55vh] md:h-[300px] flex flex-col gap-1 px-2 custom-scrollbar">
-          {Friends?.map((message) => (
-            <div
-              key={message?._id}
-              className="hover:bg-deep-gray-200 bg-opacity-75 px-4 md:px-1.5"
-            >
-              <ChatListItem
-                _id={message?._id}
-                profileImg={message?.img}
-                message={message?.message}
-                timeStamp={message?.timeStamp}
-                unreadCount={message?.unreadCount}
-                username={message?.username}
-              />
-            </div>
-          ))}
+          {searchResult.length < 1 ? (
+            Friends.map((message) => (
+              <div
+                key={message?._id}
+                className="hover:bg-deep-gray-200 bg-opacity-75 px-4 md:px-1.5"
+              >
+                <ChatListItem
+                  _id={message?._id}
+                  profileImg={message?.img}
+                  message={message?.message}
+                  timeStamp={message?.timeStamp}
+                  unreadCount={message?.unreadCount}
+                  username={message?.username}
+                />
+              </div>
+            ))
+          ) : (
+            <>
+              {searchResult?.map((user) => (
+                <Card shadow="none" className="bg-transparent cursor-pointer">
+                  <CardBody className="flex flex-col gap-4">
+                    <div className="flex items-center gap-2 capitalize font-medium">
+                      <User
+                        name={user?.username}
+                        avatarProps={{
+                          src: imageUrl(user?.profile_photo_id),
+                        }}
+                        onClick={() => handleSelectFriend(user)}
+                      />
+                    </div>
+                  </CardBody>
+                </Card>
+              ))}
+            </>
+          )}
         </div>
       </div>
     </div>

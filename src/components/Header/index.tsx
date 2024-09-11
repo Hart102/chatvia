@@ -22,6 +22,7 @@ import CallModal from "../CallModal";
 import { FaAngleLeft } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "@/redux/store";
+import { imageUrl } from "@/utils/appwriteImageurl";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -58,7 +59,7 @@ const Header = () => {
             name={selectedFriend?.username}
             avatarProps={{
               size: "md",
-              src: selectedFriend?.profileImg,
+              src: imageUrl(selectedFriend?.profile_photo_id || ""),
             }}
             classNames={{ name: "capitalize font-medium text-medium" }}
           />

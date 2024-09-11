@@ -1,5 +1,5 @@
 import { SELECT_FRIEND } from "../actionType";
-import { FriendsType } from "@/type/index"; // To be change latar
+import { UserType } from "@/type/index";
 
 const initialState = {
   selectedFriend: null,
@@ -7,7 +7,7 @@ const initialState = {
 
 type SelectFriendAction = {
   type: typeof SELECT_FRIEND;
-  payload: FriendsType;
+  payload: UserType;
 };
 
 const FriendReducer = (state = initialState, action: SelectFriendAction) => {

@@ -9,12 +9,12 @@
 
 export type UserType = {
   _id: string;
-  username: string;
-  phone: string;
-  password: string;
-  location: string;
-  bio: string;
-  friends: string[];
+  username?: string;
+  phone?: string;
+  password?: string;
+  location?: string;
+  bio?: string;
+  friends?: string[];
   createdAt?: string;
   updatedAt?: string;
   __v?: number;

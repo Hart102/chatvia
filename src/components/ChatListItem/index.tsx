@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { routes } from "@/routes";
 import { useDispatch } from "react-redux";
 import { selectFriend } from "@/redux/Actions/SelectFriendAction";
-import { FriendsType } from "@/type/index"; // To be replaced later
 
 export const FriendsList = ({
   profileImg,
@@ -65,16 +64,13 @@ const ChatListItem = ({
   const dispatch = useDispatch();
 
   const handleSelectFriend = () => {
-    const friend: FriendsType = {
-      _id,
-      username,
-      message,
-      timeStamp,
-      profileImg,
-      unreadCount,
-      email: "",
-    };
-    dispatch(selectFriend(friend));
+    dispatch(
+      selectFriend({
+        _id,
+        username,
+        profile_photo_id: profileImg,
+      })
+    );
   };
 
   const openChatRoom = () => {
