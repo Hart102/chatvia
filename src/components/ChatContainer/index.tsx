@@ -1,65 +1,60 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { BiMessageEdit, BiSend } from "react-icons/bi";
 import MessageCard from "../MessageCard";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { io } from "socket.io-client";
 import { current_user } from "@/api/currentUser";
+import { MessageType } from "@/type/index";
+import { formatDate } from "@/utils/dateFormt";
 
 const socket = io("http://localhost:5000");
 
-// import { messages } from "@/DummyData/index";
-
-type MessageType = {
-  senderId: string;
-  receiverId: string;
-  text: string;
-};
 const ChatContainer = () => {
+  const hostId = current_user()?._id;
   const [messages, setMessages] = useState<MessageType[]>([]);
   const [messageText, setMessageText] = useState<string>("");
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  // USE THE ID FROM THE SELECETED FRIEND OBJECT FO FETCH CHATS LATER
-
+  // USE THE ID FROM THE SELECETED FRIEND OBJECT FO FETCH CHATS
   const { selectedFriend } = useSelector(
     (state: RootState) => state.selectedFriend
   );
 
-  const userId = current_user()?._id;
-
-  useEffect(() => {
-    socket.on("connect", () => {
-      socket.emit("userConnected", { userId });
-    });
-
-    socket.on("friends", (data) => {
-      console.log("friends :", data);
-    });
-  }, [userId]);
+  const isProfileVisible = useSelector(
+    (state: RootState) => state.isProfileVisible
+  );
 
   useEffect(() => {
     socket.on("message", (message) => {
       setMessages([...messages, message]);
     });
-    console.log("All messages: ", messages);
-  }, [messages]);
+
+    socket.emit("fetchPreviousMessages", {
+      hostId,
+      friendId: selectedFriend?._id,
+    });
+
+    socket.on("fetchPreviousMessages", (data) => {
+      if (!data?.isError) {
+        setMessages(data?.payload);
+      }
+    });
+  }, [messages, hostId, selectedFriend]);
 
   const sendMessage = () => {
     if (messageText !== "") {
       socket.emit("sendMessage", {
         senderId: current_user()?._id,
-        receiverId: selectedFriend?._id,
-        reciever: selectedFriend?.username,
+        friendId: selectedFriend?._id,
         text: messageText,
       });
       setMessageText("");
-      console.log("sent message: ", messageText);
+      if (inputRef && inputRef.current) {
+        inputRef.current.value = "";
+      }
     }
   };
-
-  const isProfileVisible = useSelector(
-    (state: RootState) => state.isProfileVisible
-  );
 
   return (
     <div className="p-4 md:p-8">
@@ -67,12 +62,16 @@ const ChatContainer = () => {
         <MessageCard
           key={index}
           _id=""
-          message={message?.text}
-          profilePhotoId=""
-          senderId={message?.senderId}
-          time=""
+          message={message?.message || ""}
+          photoId={
+            message?.sender_id !== current_user()?._id
+              ? selectedFriend?.photo_id || ""
+              : ""
+          }
+          time={formatDate(message?.createdAt || "")}
+          senderId={message?.sender_id}
           username={
-            message?.senderId == current_user()?._id
+            message?.sender_id == current_user()?._id
               ? current_user()?.username
               : selectedFriend?.username
           }
@@ -80,15 +79,17 @@ const ChatContainer = () => {
       ))}
 
       <form
-        className={`w-full fixed bottom-0 left-0 md:left-auto md:right-2 py-4 px-2 flex items-center justify-center gap-4 border-t ${
-          isProfileVisible ? "md:w-[35%]" : "md:w-[65%] md:px-4"
-        }`}
+        className={`w-full fixed bottom-0 left-0 md:left-auto md:right-5 py-2 px-2
+          bg-deep-gray-200 bg-opacity-90 flex items-center justify-center gap-4 border-t z-10 ${
+            isProfileVisible ? "md:w-[35%]" : "md:w-[65%] md:px-4"
+          }`}
       >
         <input
+          ref={inputRef}
           type="text"
           placeholder="Enter mmessage..."
           onChange={(e) => setMessageText(e.target.value)}
-          className="w-full bg-deep-gray-200 bg-opacity-60 p-3 outline-none"
+          className="w-full p-3 outline-none shadow"
         />
         <BiMessageEdit size={20} className="text-deep-blue-100" />
         <button

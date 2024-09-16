@@ -17,14 +17,14 @@ const MessageCard = ({
   _id,
   senderId,
   username,
-  profilePhotoId,
+  photoId,
   message,
   time,
 }: {
   _id: string;
   senderId: string;
   username: string;
-  profilePhotoId: string;
+  photoId: string;
   message: string;
   time: string;
 }) => {
@@ -51,7 +51,7 @@ const MessageCard = ({
             <User
               avatarProps={{
                 size: "sm",
-                src: imageUrl(profilePhotoId),
+                src: imageUrl(photoId),
               }}
               name={username}
               classNames={{

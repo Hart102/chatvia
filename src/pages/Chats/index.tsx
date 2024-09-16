@@ -1,43 +1,72 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { User, Card, CardBody } from "@nextui-org/react";
+import { io } from "socket.io-client";
 import Avater from "@/components/Avatar";
 import { BiSearch } from "react-icons/bi";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import ChatListItem from "@/components/ChatListItem";
-import { Friends } from "@/DummyData/database";
 import instance from "@/api/axios";
 import { UserType } from "@/type/index";
 import { imageUrl } from "@/utils/appwriteImageurl";
 import { useDispatch } from "react-redux";
 import { selectFriend } from "@/redux/Actions/SelectFriendAction";
+import { current_user } from "@/api/currentUser";
+import FriendsList from "@/components/FriendsList";
+import { routes } from "@/routes";
+import { MessageType } from "@/type/index";
 
 const activeFriends = ["patrick", "emily", "doris", "steve", "teresa"];
 
+const socket = io("http://localhost:5000");
+
 const Chats = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [messages, setMessages] = useState<MessageType[]>([]);
   const [searchResult, setSearchResut] = useState<UserType[]>([]);
+  const hostId = current_user()?._id;
+
+  useEffect(() => {
+    socket.on("connect", async () => {
+      socket.emit("fetchFriends", { hostId });
+      socket.on("fetchFriends", (data) => {
+        if (!data?.isError) {
+          setMessages(data?.payload);
+        }
+      });
+    });
+  }, [hostId]);
+
+  const handleSelectFriend = (friend: MessageType) => {
+    dispatch(
+      selectFriend({
+        _id: friend?.friend_id,
+        username: friend.friend_username,
+        photo_id: friend?.friend_photo_id,
+      })
+    );
+  };
+
+  const OpenChatRoom = (_id: string, username: string, photo_id: string) => {
+    navigate(routes.chat.room);
+    dispatch(
+      selectFriend({
+        _id,
+        username,
+        photo_id,
+      })
+    );
+  };
 
   const findUser = async (query: string) => {
     if (query) {
       const { data } = await instance.get(`/find-user/${query.toLowerCase()}`);
-
       if (!data?.isError) {
         setSearchResut(data?.payload);
       }
     }
-  };
-
-  const handleSelectFriend = (user: UserType) => {
-    console.log(user);
-    dispatch(
-      selectFriend({
-        _id: user._id,
-        username: user.username,
-        profile_photo_id: user?.profile_photo_id,
-      })
-    );
   };
 
   const settings = {
@@ -51,7 +80,7 @@ const Chats = () => {
   };
 
   return (
-    <div className="w-full h-full py-8 flex flex-col gap-6 bg-deep-gray-100 bg-opacity-85">
+    <div className="w-full h-full py-8 flex flex-col gap-6">
       <p className="text-lg md:text-xl font-medium px-4 md:px-5">Chats</p>
 
       <div className="w-full flex flex-col gap-5 px-4 md:px-5">
@@ -87,34 +116,60 @@ const Chats = () => {
       <div>
         <p className="mb-5 font-medium md:text-medium px-4 md:px-5">Recent</p>
         <div className="h-[55vh] md:h-[300px] flex flex-col gap-1 px-2 custom-scrollbar">
-          {searchResult.length < 1 ? (
-            Friends.map((message) => (
-              <div
-                key={message?._id}
-                className="hover:bg-deep-gray-200 bg-opacity-75 px-4 md:px-1.5"
-              >
-                <ChatListItem
-                  _id={message?._id}
-                  profileImg={message?.img}
-                  message={message?.message}
-                  timeStamp={message?.timeStamp}
-                  unreadCount={message?.unreadCount}
-                  username={message?.username}
-                />
-              </div>
-            ))
+          {searchResult?.length < 1 ? (
+            <>
+              {messages?.map((message) => (
+                <>
+                  {/* Desktop */}
+                  <div
+                    key={message?._id}
+                    className="hidden md:block"
+                    onClick={() => handleSelectFriend(message)}
+                  >
+                    <FriendsList
+                      _id={message?._id}
+                      photo_id={message?.friend_photo_id}
+                      username={message?.friend_username || ""}
+                      message={message?.message}
+                      time="5min ago"
+                    />
+                  </div>
+                  {/* Mobile */}
+                  <div
+                    className="block md:hidden"
+                    onClick={() =>
+                      OpenChatRoom(
+                        message?.friend_id,
+                        message?.friend_username || "",
+                        message?.friend_photo_id
+                      )
+                    }
+                  >
+                    <FriendsList
+                      _id={message?._id}
+                      photo_id={message?.friend_photo_id}
+                      username={message?.friend_username || ""}
+                      message={message?.message}
+                      time="5min ago"
+                    />
+                  </div>
+                </>
+              ))}
+            </>
           ) : (
             <>
               {searchResult?.map((user) => (
                 <Card shadow="none" className="bg-transparent cursor-pointer">
                   <CardBody className="flex flex-col gap-4">
-                    <div className="flex items-center gap-2 capitalize font-medium">
+                    <div
+                      onClick={() => handleSelectFriend(user)}
+                      className="flex items-center gap-2 capitalize font-medium"
+                    >
                       <User
                         name={user?.username}
                         avatarProps={{
-                          src: imageUrl(user?.profile_photo_id),
+                          src: imageUrl(user?.photo_id),
                         }}
-                        onClick={() => handleSelectFriend(user)}
                       />
                     </div>
                   </CardBody>

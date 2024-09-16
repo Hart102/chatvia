@@ -17,9 +17,9 @@ const ManagePrivacy = () => {
 
   return (
     <div className="flex flex-col gap-4 [&_div]:pb-4 [&_p]:text-gray-700 [&_p]:font-medium">
-      {/*========== Profile photo ==========*/}
+      {/*========== Profile photo_id ==========*/}
       <div className="flex items-center justify-between pt-2 border-b">
-        <p className="text-gray-700 font-medium">Profile photo</p>
+        <p className="text-gray-700 font-medium">Profile photo_id</p>
         <Dropdown className="text-sm bg-white shadow-lg w-[150px]">
           <DropdownTrigger>
             <Button

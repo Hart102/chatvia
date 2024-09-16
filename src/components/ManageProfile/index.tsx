@@ -37,7 +37,7 @@ const ManageProfile: React.FC<setImageProp> = ({ setProfileImage }) => {
           setValue("location", data?.payload?.location);
           setValue("bio", data?.payload?.bio);
 
-          setProfileImage(data?.payload?.profile_photo_id);
+          setProfileImage(data?.payload?.photo_id);
         }
       }
     };

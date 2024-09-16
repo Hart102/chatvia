@@ -56,7 +56,7 @@ const ProfilePreview = ({
             <div className="flex flex-col items-center justify-center gap-3">
               <Avatar
                 radius="full"
-                src={imageUrl(user?.profile_photo_id)}
+                src={imageUrl(user?.photo_id)}
                 className="w-20 h-20 text-large "
                 classNames={{ img: "rounded-full" }}
               />

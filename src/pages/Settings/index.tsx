@@ -36,7 +36,7 @@ const Settings = () => {
     setIsLoading(true);
     const { data } = await instance.put(
       "/update-profile-photo",
-      { file: file, profile_photo_id: oldProfileImage },
+      { file: file, photo_id: oldProfileImage },
       {
         headers: {
           "Content-Type": "multipart/form-data",

@@ -59,7 +59,7 @@ const Header = () => {
             name={selectedFriend?.username}
             avatarProps={{
               size: "md",
-              src: imageUrl(selectedFriend?.profile_photo_id || ""),
+              src: imageUrl(selectedFriend?.photo_id || ""),
             }}
             classNames={{ name: "capitalize font-medium text-medium" }}
           />

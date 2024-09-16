@@ -20,7 +20,7 @@ const SideBar = () => {
 
   return (
     <div
-      className="fixed bottom-0 md:relative w-full md:w-[5%] bg-white 
+      className="sticky1 top-0 left-0 bottom-0 md:relative w-full md:w-[5%] bg-white 
     md:border-r py-2 px-1 flex flex-col items-center gap-4 z-10"
     >
       <Link to={routes.chat.root} className={`hidden md:flex py-4`}>
