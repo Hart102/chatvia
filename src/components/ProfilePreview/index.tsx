@@ -31,9 +31,7 @@ const ProfilePreview = ({
   };
 
   return (
-    <div
-      className={`w-screen md:w-[100%] min-h-screen py-8 ${backgroundColor}`}
-    >
+    <div className={`w-full h-full py-8 ${backgroundColor}`}>
       <Card
         shadow="none"
         radius="none"

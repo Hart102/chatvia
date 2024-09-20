@@ -7,6 +7,10 @@
   padding-right: 12px;
 }
 
+.single-slide {
+  width: 90px !important;
+}
+
 .custom-scrollbar {
   @apply overflow-y-auto;
 }

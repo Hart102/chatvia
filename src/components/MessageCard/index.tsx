@@ -7,11 +7,8 @@ import {
 } from "@nextui-org/react";
 import { FaEllipsisV, FaRegClock } from "react-icons/fa";
 import { BiCopyAlt, BiTrash } from "react-icons/bi";
-// import { messageObjectType } from "@/type/index";
 import { current_user } from "@/api/currentUser";
 import { imageUrl } from "@/utils/appwriteImageurl";
-
-
 
 const MessageCard = ({
   _id,
@@ -36,7 +33,13 @@ const MessageCard = ({
         }`}
       >
         <div>
-          <div className="flex flex-col gap-2 bg-deep-blue-100 text-white md:ml-10 p-2 md:p-3 rounded-tl-xl rounded-r-xl">
+          <div
+            className={`flex flex-col gap-2 bg-deep-blue-100 text-white md:ml-10 p-2 md:p-3 ${
+              senderId == current_user()?._id
+                ? "rounded-tl-xl rounded-l-xl rounded-tr-xl mr-2 md:mr-5"
+                : "rounded-tl-xl rounded-r-xl"
+            }`}
+          >
             <p>{message}</p>
             <span className="flex items-center justify-end gap-1 text-xs">
               <FaRegClock />
@@ -55,11 +58,12 @@ const MessageCard = ({
               }}
               name={username}
               classNames={{
+                name: "text-xs",
                 base: `flex ${
                   senderId == current_user()?._id && "flex-row-reverse"
                 }`,
               }}
-              className="text-sm font-medium text-gray-700 capitalize mt-2"
+              className="font-medium text-gray-700 capitalize mt-2"
             />
           </div>
         </div>

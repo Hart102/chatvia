@@ -3,7 +3,7 @@ import { FaUsers } from "react-icons/fa6";
 
 const Groups = () => {
   return (
-    <div className="w-screen md:w-full h-screen md:min-h-fit py-8 px-4 md:px-5 flex flex-col gap-6 bg-deep-gray-100 text-sm">
+    <div className="w-full h-full py-8 px-4 md:px-5 flex flex-col gap-6 bg-deep-gray-100 text-sm">
       <div className="flex items-center justify-between gap-4">
         <p className="text-lg md:text-xl font-medium">Groups</p>
         <FaUsers className="text-gray-400" />

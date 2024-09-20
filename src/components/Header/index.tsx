@@ -49,8 +49,8 @@ const Header = () => {
 
   return (
     <nav
-      className="w-full sticky top-0 flex items-center justify-between p-4 md:p-6 
-    border-b bg-white [&_svg]:text-gray-500 [&_svg]:cursor-pointer"
+      className="w-full h-[7vh] md:h-[13vh] sticky1 top-0 flex items-center justify-between px-4 md:px-6 
+    border-b bg-white [&_svg]:text-gray-500 [&_svg]:cursor-pointer z-10"
     >
       <div className="flex items-center gap-3">
         <FaAngleLeft onClick={() => navigation(-1)} className="md:hidden" />

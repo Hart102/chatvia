@@ -9,6 +9,7 @@ type MessageType = {
   username: string;
   message: string;
   time: string;
+  isOnline: boolean;
 };
 
 const FriendsList: React.FC<MessageType> = ({
@@ -17,13 +18,14 @@ const FriendsList: React.FC<MessageType> = ({
   username,
   message,
   time,
+  isOnline,
 }) => {
   return (
     <Card shadow="none" radius="none" className="p-0 bg-transparent" id={_id}>
       <CardBody className="px-0">
         <div className="grid grid-cols-4 md:px-2 cursor-pointer">
           <div className="flex items-center gap-3 col-span-3">
-            <Avater src={imageUrl(photo_id)} />
+            <Avater src={imageUrl(photo_id)} isOnline={isOnline} />
             <div className=" flex flex-col gap-1">
               <p className="capitalize font-medium">{username}</p>
               <span className="line-clamp-1 text-gray-500">{message}</span>

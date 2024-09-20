@@ -1,9 +1,6 @@
-export const formatDate = (timestamp: string) => {
-  const date = new Date(timestamp);
+import moment from "moment";
 
-  const day = date.getDate();
-  const month = date.getMonth() + 1;
-  const year = date.getFullYear();
-
-  return `${day}/${month}/${year}`;
+export const getRelativeTime = (timestamp: string) => {
+  const time = moment(timestamp);
+  return time.fromNow().replace("minutes", "min");
 };

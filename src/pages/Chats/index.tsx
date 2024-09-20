@@ -15,36 +15,66 @@ import { selectFriend } from "@/redux/Actions/SelectFriendAction";
 import { current_user } from "@/api/currentUser";
 import FriendsList from "@/components/FriendsList";
 import { routes } from "@/routes";
-import { MessageType } from "@/type/index";
-
-const activeFriends = ["patrick", "emily", "doris", "steve", "teresa"];
+import { MessageType, ActiveFriends } from "@/type/index";
+import { getRelativeTime } from "@/utils/dateFormt";
 
 const socket = io("http://localhost:5000");
 
 const Chats = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [messages, setMessages] = useState<MessageType[]>([]);
+  const [friends, setFriends] = useState<MessageType[]>([]);
   const [searchResult, setSearchResut] = useState<UserType[]>([]);
-  const hostId = current_user()?._id;
+  const [activeFriends, setActiveFriends] = useState<ActiveFriends[]>([]);
+  const from_user = current_user()?._id;
 
   useEffect(() => {
     socket.on("connect", async () => {
-      socket.emit("fetchFriends", { hostId });
-      socket.on("fetchFriends", (data) => {
-        if (!data?.isError) {
-          setMessages(data?.payload);
-        }
+      socket.emit("user_connected", from_user);
+      socket.on("user_connected", (data) => {
+        setActiveFriends(data?.activeFriends);
       });
     });
-  }, [hostId]);
+
+    socket.emit("fetchFriends", { from_user });
+
+    socket.on("fetchFriends", (data) => {
+      if (!data?.isError) {
+        setFriends(data?.payload);
+      }
+    });
+  }, [from_user]);
+
+  const ReturnFriendId = (ids: string[]) => {
+    const userId = ids.filter((id) => id !== from_user);
+    return userId[0];
+  };
+
+  const IndicatActiveFriends = () => {
+    const active = [];
+    if (activeFriends.length > 0 && friends.length > 0) {
+      for (let i = 0; i < friends.length; i++) {
+        const userId = ReturnFriendId([
+          friends[i].to_user,
+          friends[i].from_user,
+        ]);
+
+        if (userId == activeFriends[i]?._id) {
+          active.push(userId);
+        }
+      }
+    }
+    return active;
+  };
 
   const handleSelectFriend = (friend: MessageType) => {
+    const id = ReturnFriendId([friend?.to_user, friend?.from_user]);
+
     dispatch(
       selectFriend({
-        _id: friend?.friend_id,
-        username: friend.friend_username,
-        photo_id: friend?.friend_photo_id,
+        _id: id,
+        username: friend.username,
+        photo_id: friend?.photo_id,
       })
     );
   };
@@ -71,10 +101,11 @@ const Chats = () => {
 
   const settings = {
     dots: false,
-    infinite: true,
+    infinite: activeFriends.length > 4,
     speed: 500,
-    slidesToShow: 4,
-    slidesToScroll: activeFriends.length,
+    slidesToShow:
+      activeFriends.length > 1 ? Math.min(activeFriends.length, 4) : 1,
+    slidesToScroll: Math.min(activeFriends.length, 1),
     autoplay: false,
     // autoplaySpeed: 3000,
   };
@@ -82,7 +113,6 @@ const Chats = () => {
   return (
     <div className="w-full h-full py-8 flex flex-col gap-6">
       <p className="text-lg md:text-xl font-medium px-4 md:px-5">Chats</p>
-
       <div className="w-full flex flex-col gap-5 px-4 md:px-5">
         <form className="flex items-center gap-2 px-4 rounded bg-deep-gray-200 bg-opacity-75">
           <BiSearch size={22} className="text-gray-500" />
@@ -93,45 +123,51 @@ const Chats = () => {
             className="w-full outline-none bg-transparent py-3"
           />
         </form>
-        {/*========= Active Friends =========*/}
+        {/* Active Friends List */}
         <Slider {...settings}>
           {activeFriends.map((friend) => (
             <div
-              key={friend}
-              className="flex flex-col items-center mt-5 cursor-pointer"
+              key={friend?._id}
+              className={`${
+                activeFriends.length === 1 && "single-slide"
+              } flex-shrink-0 flex flex-col items-center mt-5 cursor-pointer`}
             >
               <div className="z-10 -my-4 flex justify-center">
-                <Avater src="https://i.pravatar.cc/150?u=a04258114e29026708c" />
+                <Avater src={imageUrl(friend?.photo_id)} isOnline={true} />
               </div>
               <div className="min-h-[50px] w-full pt-5 bg-deep-gray-200 rounded bg-opacity-75">
                 <p className="capitalize text-center text-xs font-medium line-clamp-1">
-                  {friend}
+                  {friend?.username}
                 </p>
               </div>
             </div>
           ))}
         </Slider>
       </div>
-      {/*============ Chat List ============*/}
+      {/* Friends List */}
       <div>
         <p className="mb-5 font-medium md:text-medium px-4 md:px-5">Recent</p>
         <div className="h-[55vh] md:h-[300px] flex flex-col gap-1 px-2 custom-scrollbar">
           {searchResult?.length < 1 ? (
             <>
-              {messages?.map((message) => (
+              {friends?.map((friend, index) => (
                 <>
                   {/* Desktop */}
                   <div
-                    key={message?._id}
+                    key={friend?._id}
                     className="hidden md:block"
-                    onClick={() => handleSelectFriend(message)}
+                    onClick={() => handleSelectFriend(friend)}
                   >
                     <FriendsList
-                      _id={message?._id}
-                      photo_id={message?.friend_photo_id}
-                      username={message?.friend_username || ""}
-                      message={message?.message}
-                      time="5min ago"
+                      _id={friend?._id}
+                      photo_id={friend?.photo_id}
+                      username={friend?.username || ""}
+                      message={friend?.message}
+                      time={getRelativeTime(friend?.createdAt || "")}
+                      isOnline={
+                        IndicatActiveFriends()[index] ==
+                        ReturnFriendId([friend?.from_user, friend?.to_user])
+                      }
                     />
                   </div>
                   {/* Mobile */}
@@ -139,18 +175,22 @@ const Chats = () => {
                     className="block md:hidden"
                     onClick={() =>
                       OpenChatRoom(
-                        message?.friend_id,
-                        message?.friend_username || "",
-                        message?.friend_photo_id
+                        friend?.to_user,
+                        friend?.username || "",
+                        friend?.photo_id
                       )
                     }
                   >
                     <FriendsList
-                      _id={message?._id}
-                      photo_id={message?.friend_photo_id}
-                      username={message?.friend_username || ""}
-                      message={message?.message}
-                      time="5min ago"
+                      _id={friend?._id}
+                      photo_id={friend?.photo_id}
+                      username={friend?.username || ""}
+                      message={friend?.message}
+                      time={getRelativeTime(friend?.createdAt || "")}
+                      isOnline={
+                        IndicatActiveFriends()[index] ==
+                        ReturnFriendId([friend?.from_user, friend?.to_user])
+                      }
                     />
                   </div>
                 </>
@@ -162,7 +202,15 @@ const Chats = () => {
                 <Card shadow="none" className="bg-transparent cursor-pointer">
                   <CardBody className="flex flex-col gap-4">
                     <div
-                      onClick={() => handleSelectFriend(user)}
+                      onClick={() => {
+                        dispatch(
+                          selectFriend({
+                            _id: user?._id,
+                            username: user?.username,
+                            photo_id: user?.photo_id,
+                          })
+                        );
+                      }}
                       className="flex items-center gap-2 capitalize font-medium"
                     >
                       <User
