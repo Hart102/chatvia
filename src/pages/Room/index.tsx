@@ -28,4 +28,3 @@ const Room = () => {
 };
 
 export default Room;
-a;
