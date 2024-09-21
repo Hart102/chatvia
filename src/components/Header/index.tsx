@@ -35,10 +35,10 @@ const Header = () => {
     dispatch(
       openModal(
         <CallModal
+          recieverId={selectedFriend?._id || ""}
           recieversImage="https://i.pravatar.cc/150?u=a04258114e29026702d"
           recieversName="Jane Doe"
           callType={callType}
-          onclick={() => console.log("clicked")}
         />,
         "md"
       )

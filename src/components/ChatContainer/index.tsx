@@ -66,7 +66,7 @@ const ChatContainer = () => {
         {messages?.map((message, index) => (
           <MessageCard
             key={index}
-            _id=""
+            _id={message?._id}
             senderId={message?.from_user}
             message={message?.message || ""}
             time={getRelativeTime(message?.createdAt || "")}
