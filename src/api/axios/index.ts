@@ -1,6 +1,8 @@
 import axios from "axios";
 import { access_token } from "../cookie/index";
-
+export const apiURL = "https://chatvia-api.vercel.app/";
+const baseURL = "https://chatvia-api.vercel.app/api";
+// const baseURL = "http://localhost:5000/api";
 
 const token = () => {
   if (access_token !== undefined) {
@@ -10,7 +12,7 @@ const token = () => {
 };
 
 const instance = axios.create({
-  baseURL: "http://localhost:5000/api",
+  baseURL: baseURL,
   headers: {
     "Content-Type": "application/json",
     Authorization: `Bearer ${token()}`,

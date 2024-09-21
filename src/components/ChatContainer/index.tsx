@@ -7,8 +7,9 @@ import { io } from "socket.io-client";
 import { current_user } from "@/api/currentUser";
 import { MessageType } from "@/type/index";
 import { getRelativeTime } from "@/utils/dateFormt";
+import { apiURL } from "@/api/axios";
 
-const socket = io("http://localhost:5000");
+const socket = io(apiURL);
 
 const ChatContainer = () => {
   const from_user = current_user()?._id;

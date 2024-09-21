@@ -1,15 +1,13 @@
 import SideBar from "@/components/Sidebar";
 import { Outlet } from "react-router-dom";
-// import ChatContainer from "@/components/ChatContainer";
+import ChatContainer from "@/components/ChatContainer";
 import ModalLayout from "@/components/ModalLayout/index.";
 import ProfilePreview from "@/components/ProfilePreview";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import Header from "@/components/Header";
 // import VioceCall from "@/components/VioceCall";
-import VideoCall from "@/components/VideoCall";
-
-
+// import VideoCall from "@/components/VideoCall";
 
 const Chat = () => {
   const isProfileVisible = useSelector(
@@ -31,8 +29,8 @@ const Chat = () => {
               }`}
             >
               <Header />
-              {/* <ChatContainer /> */}
-              <VideoCall />
+              <ChatContainer />
+              {/* <VideoCall /> */}
             </div>
             {isProfileVisible && (
               <div className="w-[47%] border-l-4 border-deep-gray-100">

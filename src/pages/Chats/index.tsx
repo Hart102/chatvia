@@ -7,7 +7,7 @@ import { BiSearch } from "react-icons/bi";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import instance from "@/api/axios";
+import instance, { apiURL } from "@/api/axios";
 import { UserType } from "@/type/index";
 import { imageUrl } from "@/utils/appwriteImageurl";
 import { useDispatch } from "react-redux";
@@ -18,7 +18,7 @@ import { routes } from "@/routes";
 import { MessageType, ActiveFriends } from "@/type/index";
 import { getRelativeTime } from "@/utils/dateFormt";
 
-const socket = io("http://localhost:5000");
+const socket = io(apiURL);
 
 const Chats = () => {
   const dispatch = useDispatch();
@@ -29,21 +29,19 @@ const Chats = () => {
   const from_user = current_user()?._id;
 
   useEffect(() => {
-    socket.on("connect", async () => {
-      socket.emit("user_connected", from_user);
-      socket.on("user_connected", (data) => {
-        setActiveFriends(data?.activeFriends);
-      });
+    socket.on("connect", async () => {});
+    socket.emit("user_connected", from_user);
+    socket.on("user_connected", (data) => {
+      setActiveFriends(data?.activeFriends);
     });
-
     socket.emit("fetchFriends", { from_user });
-
     socket.on("fetchFriends", (data) => {
       if (!data?.isError) {
         setFriends(data?.payload);
       }
     });
   }, [from_user]);
+
 
   const ReturnFriendId = (ids: string[]) => {
     const userId = ids.filter((id) => id !== from_user);
