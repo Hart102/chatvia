@@ -22,7 +22,7 @@ const Profile = () => {
 
   return (
     <ProfilePreview
-      user={user}
+      user={user ?? { _id: "", photo_id: "" }}
       isPersonalProfile={true}
       backgroundColor="bg-deep-gray-100"
     />

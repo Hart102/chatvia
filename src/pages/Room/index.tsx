@@ -16,7 +16,10 @@ const Room = () => {
       <ChatContainer />
       {isProfileVisible && (
         <div className="absolute bg-white top-0 z-0">
-          <ProfilePreview isPersonalProfile={false} />
+          <ProfilePreview
+            user={{ _id: "", photo_id: "" }}
+            isPersonalProfile={false}
+          />
         </div>
       )}
       <ModalLayout />
