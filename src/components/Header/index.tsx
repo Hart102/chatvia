@@ -49,7 +49,7 @@ const Header = () => {
 
   return (
     <nav
-      className="w-full h-[7vh] md:h-[13vh] sticky1 top-0 flex items-center justify-between px-4 md:px-6 
+      className="w-full h-[7vh] md:h-[13vh] fixed top-0 md:relative flex items-center justify-between px-4 md:px-6 
     border-b bg-white [&_svg]:text-gray-500 [&_svg]:cursor-pointer z-10"
     >
       <div className="flex items-center gap-3">

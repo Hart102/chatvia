@@ -16,13 +16,13 @@ const Chat = () => {
 
   return (
     <>
-      <div className="w-screen h-screen fixed top-0 flex flex-col-reverse md:flex-row lg:flex-row text-sm overflow-hidden">
+      <div className="w-screen h-screen1 fixed top-0 flex flex-col-reverse md:flex-row lg:flex-row text-sm overflow-hidden">
         <SideBar />
         <div className="w-full md:w-[95%] h-full md:flex">
           <div className="w-full md:w-[30%] h-full md:px-2 bg-deep-gray-100 overflow-y-auto custom-scrollbar">
             <Outlet />
           </div>
-          <div className="w-full md:w-[70%] flex">
+          <div className="w-full md:w-[70%] flex flex-col md:flex-row">
             <div
               className={`w-full duration-300 delay-300 hidden md:block ${
                 isProfileVisible ? "md:w-[62%]" : "md:w-[100%]"

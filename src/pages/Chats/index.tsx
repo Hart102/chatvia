@@ -18,7 +18,9 @@ import { routes } from "@/routes";
 import { MessageType, ActiveFriends } from "@/type/index";
 import { getRelativeTime } from "@/utils/dateFormt";
 
-const socket = io(apiURL);
+const socket = io(apiURL, {
+  transports: ["polling"],
+});
 
 const Chats = () => {
   const dispatch = useDispatch();
@@ -41,7 +43,6 @@ const Chats = () => {
       }
     });
   }, [from_user]);
-
 
   const ReturnFriendId = (ids: string[]) => {
     const userId = ids.filter((id) => id !== from_user);

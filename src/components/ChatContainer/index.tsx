@@ -9,7 +9,9 @@ import { MessageType } from "@/type/index";
 import { getRelativeTime } from "@/utils/dateFormt";
 import { apiURL } from "@/api/axios";
 
-const socket = io(apiURL);
+const socket = io(apiURL, {
+  transports: ["polling"],
+});
 
 const ChatContainer = () => {
   const from_user = current_user()?._id;
@@ -62,7 +64,7 @@ const ChatContainer = () => {
   };
 
   return (
-    <div className="w-full h-[93vh] md:h-[87vh]">
+    <div className="w-full h-[93vh] md:h-[87vh] pt-12 md:pt-0">
       <div className="w-full h-[92%] md:h-[88%] p-4 md:p-8 overflow-y-auto custom-scrollbar">
         {messages?.map((message, index) => (
           <MessageCard
@@ -86,9 +88,9 @@ const ChatContainer = () => {
       </div>
 
       {/* Form for sending messages */}
-      <div className="w-full relative bg-deep-gray-200 bg-opacity-90">
+      <div className="w-full fixed bottom-0 md:relative bg-deep-gray-200 bg-opacity-90">
         <form
-          className={`w-full fixed1 bottom-0 left-0 md:left-auto md:right-5 py-2 px-2
+          className={`w-full py-1 md:py-2 px-2
            flex items-center justify-center gap-4 border-t z-10 ${
              isProfileVisible ? "md:w-[35%]" : "md:w-[100%] md:px-4"
            }`}
