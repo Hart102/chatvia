@@ -50,7 +50,7 @@ const ChatContainer = () => {
 
   const sendMessage = () => {
     if (messageText !== "") {
-      socket.emit("sendMessage", {
+      socket.emit("SendMessage", {
         from_user: from_user,
         to_user: selectedFriend?._id,
         text: messageText,
