@@ -174,7 +174,7 @@ const Chats = () => {
                     className="block md:hidden"
                     onClick={() =>
                       OpenChatRoom(
-                        friend?.to_user,
+                        ReturnFriendId([friend?.from_user, friend?.to_user]),
                         friend?.username || "",
                         friend?.photo_id
                       )

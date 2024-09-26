@@ -64,7 +64,7 @@ const ChatContainer = () => {
   };
 
   return (
-    <div className="w-full h-[93vh] md:h-[87vh] pt-12 md:pt-0">
+    <div className="w-full h-[93vh] md:h-[87vh] pt-16 md:pt-0">
       <div className="w-full h-[92%] md:h-[88%] p-4 md:p-8 overflow-y-auto custom-scrollbar">
         {messages?.map((message, index) => (
           <MessageCard
