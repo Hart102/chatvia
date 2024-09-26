@@ -25,8 +25,9 @@ const Signin = () => {
     setIsLoading(true);
 
     const response = await instance.post("/login", data);
+    console.log(response?.data);
     setIsLoading(false);
-    
+
     if (!response?.data?.isError) {
       toast.success(response?.data?.message);
       setCookie({
@@ -34,7 +35,7 @@ const Signin = () => {
         value: JSON.stringify(response?.data?.payoad),
       });
       window.location.href = routes.chat.root;
-      return
+      return;
     }
     toast.error(response?.data?.message);
   };
