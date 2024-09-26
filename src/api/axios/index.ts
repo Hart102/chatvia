@@ -1,9 +1,9 @@
 import axios from "axios";
 import { access_token } from "../cookie/index";
-// export const apiURL = "https://chatvia-api.onrender.com/";
-// const baseURL = `${apiURL}api`;
-export const apiURL = "http://localhost:5000";
-const baseURL = `${apiURL}/api`;
+export const apiURL = "https://chatvia-api.onrender.com/";
+const baseURL = `${apiURL}api`;
+// export const apiURL = "http://localhost:5000";
+// const baseURL = `${apiURL}/api`;
 const token = () => {
   if (access_token !== undefined) {
     return JSON.parse(access_token).token;
